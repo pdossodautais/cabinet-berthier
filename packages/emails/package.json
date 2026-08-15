@@ -1,0 +1,21 @@
+{
+  "name": "@repo/emails",
+  "version": "0.0.0",
+  "private": true,
+  "exports": {
+    "./contact-notification": "./src/contact-notification.tsx",
+    "./contact-confirmation": "./src/contact-confirmation.tsx",
+    "./property-alert": "./src/property-alert.tsx",
+    "./agent-invitation": "./src/agent-invitation.tsx",
+    "./agent-welcome": "./src/agent-welcome.tsx",
+    "./contact-reply": "./src/contact-reply.tsx",
+    "./estimation-confirmation": "./src/estimation-confirmation.tsx",
+    "./admin-digest": "./src/admin-digest.tsx"
+  },
+  "dependencies": {
+    "@react-email/components": "^1.0.12"
+  },
+  "peerDependencies": {
+    "react": ">=19"
+  }
+}

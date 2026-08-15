@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+  <head><meta charset="utf-8"><title>Dev paste</title></head>
+  <body>
+    <pre id="log"></pre>
+    <script>
+      const log = (s) => { document.getElementById('log').textContent += s + '\n'; };
+      (async () => {
+        try {
+          const raw = window.name;
+          log('window.name length: ' + raw.length);
+          if (!raw || raw.length < 100) { log('no data'); return; }
+          const destName = new URLSearchParams(location.search).get('name') || 'logic-immo.json';
+          const res = await fetch('/api/dev-dump?name=' + encodeURIComponent(destName), {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-Ingest-Secret': 'dev-revalidation-secret-change-in-production',
+            },
+            body: raw,
+          });
+          const json = await res.json();
+          log('status: ' + res.status);
+          log('result: ' + JSON.stringify(json));
+          window.__DUMP_OK__ = res.ok;
+        } catch (e) {
+          log('err: ' + e.message);
+        }
+      })();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,48 @@
+{
+  "$schema": "./packages/shared/client-config.schema.json",
+  "slug": "cabinet-berthier",
+  "agencyName": "Cabinet Berthier",
+  "agencyFullName": "Cabinet Berthier — Transactions Immobilières",
+  "agencyShortName": "Cabinet Berthier",
+  "city": "Paris",
+  "region": "Île-de-France",
+  "tagline": "L'immobilier patrimonial du 16ᵉ arrondissement depuis 1998.",
+  "logoSubtitle": "Paris 16ᵉ",
+  "logoAlt": "Cabinet Berthier — Agence immobilière Paris 16ᵉ",
+  "description": "Fondé en 1998 par Julien Berthier, le Cabinet Berthier accompagne propriétaires et acquéreurs du 16ᵉ arrondissement de Paris dans leurs projets de vente, location et gestion. Installé à deux pas du Trocadéro et de l'Étoile, le cabinet met son expertise du marché haussmannien au service d'une clientèle française et internationale. Français, anglais.",
+  "shortDescription": "Agence immobilière à Paris 16ᵉ — vente, location, gestion depuis 1998.",
+  "primaryDomain": "cabinet-berthier.example",
+  "foundedYear": 1998,
+  "contact": {
+    "phone": "01 23 45 67 89",
+    "email": "contact@cabinet-berthier.example",
+    "address": "1 rue Exemple, 75116 Paris",
+    "addressShort": "1 rue Exemple",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Trocadéro+Paris+16",
+    "hours": "Lundi – Vendredi · 9h – 19h · Samedi · 9h – 12h"
+  },
+  "social": {
+    "instagram": "",
+    "facebook": "",
+    "linkedin": "",
+    "twitter": ""
+  },
+  "brand": {
+    "hue": 258,
+    "chroma": 0.18,
+    "radius": "0.125rem",
+    "themeColor": "#f7f5f1",
+    "accentColor": "#1644a8"
+  },
+  "reviews": {
+    "url": "https://www.google.com/maps/search/?api=1&query=Trocadéro+Paris+16",
+    "rating": 5,
+    "count": 0
+  },
+  "ogImage": {
+    "alt": "Cabinet Berthier — Agence immobilière Paris 16ᵉ",
+    "tagline": "L'immobilier patrimonial du 16ᵉ arrondissement depuis 1998.",
+    "footerLeft": "Paris 16ᵉ",
+    "footerRight": "cabinet-berthier.example"
+  }
+}

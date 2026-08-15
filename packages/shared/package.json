@@ -1,0 +1,28 @@
+{
+  "name": "@repo/shared",
+  "version": "0.0.0",
+  "private": true,
+  "exports": {
+    "./alert-tokens": "./src/alert-tokens.ts",
+    "./client-config": "./src/client-config.ts",
+    "./constants": "./src/constants.ts",
+    "./env": "./src/env.ts",
+    "./utils": "./src/utils.ts",
+    "./supabase/client": "./src/supabase/client.ts",
+    "./supabase/server": "./src/supabase/server.ts",
+    "./supabase/middleware": "./src/supabase/middleware.ts",
+    "./supabase/types": "./src/supabase/types.ts",
+    "./resend": "./src/resend/send.ts"
+  },
+  "dependencies": {
+    "@supabase/ssr": "^0.10.2",
+    "@supabase/supabase-js": "^2.103.0",
+    "resend": "^6.10.0",
+    "zod": "^4.0.0",
+    "@repo/emails": "*"
+  },
+  "peerDependencies": {
+    "next": ">=16",
+    "react": ">=19"
+  }
+}

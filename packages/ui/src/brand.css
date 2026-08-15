@@ -1,0 +1,108 @@
+/* Cabinet Berthier — palette éditoriale cobalt + ivoire + encre
+ *
+ * Inspiration : devanture bleue haussmannienne (cartouche blanc-sur-bleu
+ * à double filet), magazine haussmannien, galerie d'art.
+ *
+ * Tokens bruts (valeurs fidèles aux hex du handoff) :
+ *   --cobalt      #1644a8   devanture saturée
+ *   --cobalt-deep #0e2c78   ombre / hovers
+ *   --ink         #0b1020   quasi-noir bleuté
+ *   --paper       #faf6ec   fond principal
+ *   --ivory       #f4ede0   crème chaude
+ *   --bone        #ebe2d0   filet / bordure
+ *   --gold        #b08a3e   accent doré discret
+ */
+:root {
+  /* Bruts — hex fidèles à la maquette de design */
+  --cobalt: #1644a8;
+  --cobalt-deep: #0e2c78;
+  --ink-raw: #0b1020;
+  --paper-raw: #faf6ec;
+  --ivory-raw: #f4ede0;
+  --bone-raw: #ebe2d0;
+  --gold-raw: #b08a3e;
+
+  /* Oklch dérivés pour bg/border/ring consistants */
+  --brand-hue: 269;
+  --brand-chroma: 0.178;
+
+  /* Shadcn mapping — la carrosserie utilise ces tokens partout */
+  --background: var(--paper-raw);
+  --foreground: var(--ink-raw);
+  --card: oklch(0.99 0.004 85);
+  --card-foreground: var(--ink-raw);
+  --popover: var(--paper-raw);
+  --popover-foreground: var(--ink-raw);
+  --primary: var(--cobalt);
+  --primary-foreground: oklch(0.99 0 0);
+  --secondary: var(--ivory-raw);
+  --secondary-foreground: var(--ink-raw);
+  --muted: var(--ivory-raw);
+  --muted-foreground: oklch(0.43 0.02 268);
+  --accent: var(--ivory-raw);
+  --accent-foreground: var(--ink-raw);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: var(--bone-raw);
+  --input: var(--bone-raw);
+  --ring: var(--cobalt);
+  --chart-1: var(--cobalt);
+  --chart-2: var(--cobalt-deep);
+  --chart-3: var(--gold-raw);
+  --chart-4: oklch(0.55 0.08 30);
+  --chart-5: var(--ink-raw);
+  --radius: 0rem;
+  --sidebar: var(--ivory-raw);
+  --sidebar-foreground: var(--ink-raw);
+  --sidebar-primary: var(--cobalt);
+  --sidebar-primary-foreground: oklch(0.99 0 0);
+  --sidebar-accent: var(--paper-raw);
+  --sidebar-accent-foreground: var(--ink-raw);
+  --sidebar-border: var(--bone-raw);
+  --sidebar-ring: var(--cobalt);
+}
+
+.dark {
+  --background: var(--ink-raw);
+  --foreground: var(--paper-raw);
+  --card: oklch(0.21 0.025 265);
+  --card-foreground: var(--paper-raw);
+  --popover: oklch(0.21 0.025 265);
+  --popover-foreground: var(--paper-raw);
+  --primary: oklch(0.65 0.17 268);
+  --primary-foreground: oklch(0.99 0 0);
+  --secondary: oklch(0.268 0.04 265);
+  --secondary-foreground: var(--paper-raw);
+  --muted: oklch(0.268 0.04 265);
+  --muted-foreground: oklch(0.72 0.015 85);
+  --accent: oklch(0.268 0.04 265);
+  --accent-foreground: var(--paper-raw);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(0.28 0.03 265);
+  --input: oklch(0.28 0.03 265);
+  --ring: oklch(0.65 0.17 268);
+  --chart-1: oklch(0.65 0.17 268);
+  --chart-2: oklch(0.55 0.14 268);
+  --chart-3: var(--gold-raw);
+  --chart-4: oklch(0.55 0.08 30);
+  --chart-5: var(--paper-raw);
+  --sidebar: oklch(0.21 0.025 265);
+  --sidebar-foreground: var(--paper-raw);
+  --sidebar-primary: oklch(0.65 0.17 268);
+  --sidebar-primary-foreground: oklch(0.99 0 0);
+  --sidebar-accent: oklch(0.268 0.04 265);
+  --sidebar-accent-foreground: var(--paper-raw);
+  --sidebar-border: oklch(0.28 0.03 265);
+  --sidebar-ring: oklch(0.65 0.17 268);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    @apply font-sans;
+  }
+}

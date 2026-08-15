@@ -1,0 +1,1323 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "@repo/ui/brand.css";
+@source "../../../packages/ui/src";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-inter-tight), "Inter Tight", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), "JetBrains Mono", ui-monospace, monospace;
+  --font-serif: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
+  --font-heading: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  /* Alias éditoriaux du thème */
+  --color-ink: var(--ink-raw);
+  --color-ink-2: var(--ink-raw);
+  --color-ink-muted: var(--muted-foreground);
+  --color-ink-subtle: var(--muted-foreground);
+  --color-paper: var(--paper-raw);
+  --color-ivory: var(--ivory-raw);
+  --color-ivory-2: var(--ivory-raw);
+  --color-bone: var(--bone-raw);
+  --color-hairline: var(--bone-raw);
+  --color-hairline-strong: var(--ink-raw);
+  --color-cobalt: var(--cobalt);
+  --color-cobalt-deep: var(--cobalt-deep);
+  --color-gold: var(--gold-raw);
+  --color-brass: var(--gold-raw);
+  --color-brass-deep: var(--gold-raw);
+  --color-brass-light: var(--gold-raw);
+  --color-fog: var(--ivory-raw);
+  --color-ok: var(--cobalt);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+@layer base {
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  input[type="number"] {
+    -moz-appearance: textfield;
+  }
+  button,
+  [role="button"],
+  input,
+  textarea,
+  select {
+    border-radius: var(--radius);
+  }
+  button:not(:disabled):not([aria-disabled="true"]),
+  [role="button"]:not([aria-disabled="true"]),
+  [role="tab"],
+  summary {
+    cursor: pointer;
+  }
+  button:disabled,
+  [aria-disabled="true"] {
+    cursor: not-allowed;
+  }
+}
+
+/* Utilitaire mono — raccourci pour la police monospace */
+.mono {
+  font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
+}
+
+/* ══════════════════════════════════════════════════════════════════
+ * Système éditorial du thème
+ * Port depuis la maquette de design (avril 2026)
+ * ══════════════════════════════════════════════════════════════════ */
+
+/* Typography primitives */
+.h-display {
+  font-family: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 0.95;
+}
+.h-caps {
+  font-family: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+}
+.h-small-caps {
+  font-family: var(--font-inter-tight), "Inter Tight", sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-size: 11px;
+}
+.h-eyebrow {
+  font-family: var(--font-jetbrains-mono), "JetBrains Mono", monospace;
+  font-weight: 400;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.h-italic {
+  font-family: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+}
+.tabular {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+/* Devanture cartouche — signature visuelle bleu/blanc à double filet
+   Note : position en @layer components pour permettre l'override par les
+   utilities Tailwind (ex. `.absolute`). */
+@layer components {
+  .cartouche {
+    position: relative;
+  }
+}
+.cartouche {
+  background: var(--cobalt);
+  color: white;
+  padding: 1.25rem 1.75rem;
+  isolation: isolate;
+}
+.cartouche::before {
+  content: "";
+  position: absolute;
+  inset: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  pointer-events: none;
+  z-index: 0;
+}
+.cartouche::after {
+  content: "";
+  position: absolute;
+  inset: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  pointer-events: none;
+  z-index: 0;
+}
+.cartouche-inner {
+  position: relative;
+  z-index: 1;
+}
+
+/* Filets */
+.rule {
+  border-top: 1px solid var(--bone-raw);
+}
+.rule-ink {
+  border-top: 1px solid var(--ink-raw);
+}
+.rule-v {
+  border-left: 1px solid var(--bone-raw);
+}
+
+/* Chapter mark : ¶ Nº 01 */
+.chapter-mark {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 10px;
+  font-family: var(--font-jetbrains-mono), "JetBrains Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--cobalt);
+}
+.chapter-mark::before {
+  content: "";
+  width: 28px;
+  height: 1px;
+  background: var(--cobalt);
+  display: inline-block;
+  transform: translateY(-4px);
+}
+
+/* Placeholder "photo" haussmannien — fallback quand pas d'image */
+.placeholder-photo {
+  background-color: #d6c9b0;
+  background-image:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.25) 0%, rgba(0, 0, 0, 0.15) 100%),
+    repeating-linear-gradient(45deg, rgba(11, 16, 32, 0.04) 0 2px, transparent 2px 8px);
+  position: relative;
+  overflow: hidden;
+}
+.placeholder-photo::after {
+  content: attr(data-label);
+  position: absolute;
+  bottom: 10px;
+  right: 12px;
+  font-family: var(--font-jetbrains-mono), "JetBrains Mono", monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.85);
+  mix-blend-mode: difference;
+}
+.placeholder-photo.p-warm {
+  background-color: #cdb393;
+}
+.placeholder-photo.p-cool {
+  background-color: #a9b0bd;
+}
+.placeholder-photo.p-night {
+  background-color: #3d4a66;
+}
+.placeholder-photo.p-dusk {
+  background-color: #b4a89a;
+}
+.placeholder-photo.p-stone {
+  background-color: #c5beb0;
+}
+.placeholder-photo.p-roof {
+  background-color: #7f8a98;
+}
+
+/* Facade haussmannien — full-bleed décor */
+.facade-bg {
+  background-color: #c7b79a;
+  background-image:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.25)),
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='180' viewBox='0 0 120 180'><g fill='none' stroke='%23000000' stroke-opacity='0.12' stroke-width='0.8'><rect x='12' y='18' width='32' height='56' rx='2'/><rect x='76' y='18' width='32' height='56' rx='2'/><rect x='12' y='92' width='32' height='56' rx='2'/><rect x='76' y='92' width='32' height='56' rx='2'/><line x1='0' y1='8' x2='120' y2='8'/><line x1='0' y1='82' x2='120' y2='82'/><line x1='0' y1='158' x2='120' y2='158'/></g></svg>");
+}
+
+/* Boutons éditoriaux */
+.btn-ink {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--ink-raw);
+  color: var(--paper-raw);
+  padding: 14px 22px;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 500;
+  border: 1px solid var(--ink-raw);
+  transition: background 150ms, color 150ms, border-color 150ms;
+}
+.btn-ink:hover {
+  background: var(--cobalt);
+  border-color: var(--cobalt);
+}
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: transparent;
+  color: var(--ink-raw);
+  padding: 14px 22px;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 500;
+  border: 1px solid var(--ink-raw);
+  transition: background 150ms, color 150ms;
+}
+.btn-ghost:hover {
+  background: var(--ink-raw);
+  color: var(--paper-raw);
+}
+.btn-cobalt {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--cobalt);
+  color: white;
+  padding: 14px 22px;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 500;
+  border: 1px solid var(--cobalt);
+  transition: background 150ms, border-color 150ms;
+}
+.btn-cobalt:hover {
+  background: var(--cobalt-deep);
+  border-color: var(--cobalt-deep);
+}
+.link-under {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 2px;
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+/* Map placeholder grid */
+.map-grid {
+  background-color: #e6dfd0;
+  background-image:
+    linear-gradient(#d7cdb3 1px, transparent 1px),
+    linear-gradient(90deg, #d7cdb3 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* No scrollbar (marquee horizontaux) */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Selection + focus — cohérents avec le ancrage bleu */
+::selection {
+  background: var(--cobalt);
+  color: white;
+}
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--cobalt);
+  outline-offset: 2px;
+}
+
+/* Checkbox éditoriale — carré, cobalt quand cochée */
+.checkbox-editorial {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  border: 1px solid var(--bone-raw);
+  background: var(--paper-raw);
+  border-radius: 0;
+  cursor: pointer;
+  position: relative;
+  flex-shrink: 0;
+  transition: border-color 150ms, background 150ms;
+}
+.checkbox-editorial:hover {
+  border-color: var(--cobalt);
+}
+.checkbox-editorial:checked {
+  background: var(--cobalt);
+  border-color: var(--cobalt);
+}
+.checkbox-editorial:checked::after {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 0px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 1.5px 1.5px 0;
+  transform: rotate(45deg);
+}
+.checkbox-editorial:focus-visible {
+  outline: 2px solid var(--cobalt);
+  outline-offset: 2px;
+}
+
+/* Fade-in page transitions */
+.fade-in {
+  animation: cv-fadeIn 420ms ease-out both;
+}
+/* Pas de translateY — un transform sur <main> créerait un containing
+ * block qui casse les position: fixed des descendants (FAB mobile). */
+@keyframes cv-fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fade-in {
+    animation: none;
+  }
+}
+
+/* Fade court pour les transitions vue grille ↔ vue carte dans /biens
+   (évite le flash abrupt quand le contenu change). */
+.view-swap {
+  animation: cv-viewSwap 280ms ease-out;
+}
+@keyframes cv-viewSwap {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Micro-interaction : feedback bref quand l'utilisateur ajoute aux favoris.
+   Le cœur pulse une fois (scale 1 → 1.18 → 1). */
+@keyframes cv-pulseHeart {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  35% {
+    transform: scale(1.18);
+  }
+}
+.animate-pulse-heart {
+  animation: cv-pulseHeart 380ms ease-out;
+}
+
+/* Translate-x doux sur les flèches → de tous les liens "Lire / Voir / Découvrir"
+   au hover de leur parent (.group). */
+.group:hover .group-arrow,
+.group:focus-visible .group-arrow {
+  transform: translateX(3px);
+}
+.group-arrow {
+  transition: transform 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* Underline animée gauche → droite. Appliquer sur un span/h3 enfant du
+   .group ; au hover du parent, l'underline grandit de 0 à 100%. */
+.link-underline-anim {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  background-size: 0 1px;
+  transition: background-size 320ms cubic-bezier(0.16, 1, 0.3, 1);
+  padding-bottom: 2px;
+}
+.group:hover .link-underline-anim,
+.group:focus-visible .link-underline-anim {
+  background-size: 100% 1px;
+}
+
+/* Underline qui descend d'un coup (utile pour les liens nav qui ont déjà
+   un état actif avec underline) */
+.nav-underline {
+  position: relative;
+}
+.nav-underline::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 1px;
+  background: var(--ink-raw);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 280ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.nav-underline:hover::after,
+.nav-underline:focus-visible::after {
+  transform: scaleX(1);
+}
+
+/* Image cover qui zoome subtilement quand son parent .group est en hover.
+   À mettre sur le wrapper de l'image, pas sur l'image elle-même. */
+.group:hover .group-zoom,
+.group:focus-visible .group-zoom {
+  transform: scale(1.05);
+}
+.group-zoom {
+  transition: transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+/* Active feedback sur les boutons (scale subtil pendant le press) */
+.btn-ink,
+.btn-cobalt,
+.btn-ghost {
+  transition: background 180ms ease, color 180ms ease, border-color 180ms ease,
+    transform 120ms ease;
+}
+.btn-ink:active,
+.btn-cobalt:active,
+.btn-ghost:active {
+  transform: scale(0.97);
+}
+
+/* Tap highlight discret sur mobile (iOS Safari ajoute du bleu sinon) */
+a,
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ─────────────────────────────────────────────────────────────────
+ * Vocabulaire d'animations du thème
+ * Tout est cohérent : easing cubic-bezier(0.16, 1, 0.3, 1) (ease-out-quart),
+ * durées 220-700ms, palette cobalt/ink. Respect prefers-reduced-motion en bas.
+ * ───────────────────────────────────────────────────────────────── */
+
+/* Card lift — translation discrète au hover (cards génériques).
+   Pas de box-shadow : design éditorial, on évite les drop-shadows visibles. */
+.card-lift {
+  transition: transform 420ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.card-lift:hover,
+.group:hover .card-lift,
+.group:focus-visible .card-lift {
+  transform: translateY(-3px);
+}
+
+/* Boutons avec fill qui glisse (left → right) au hover */
+.btn-fill {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.btn-fill > * {
+  position: relative;
+  z-index: 1;
+}
+.btn-fill::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--cobalt);
+  transform: translateX(-101%);
+  transition: transform 480ms cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 0;
+}
+.btn-fill:hover::before,
+.btn-fill:focus-visible::before {
+  transform: translateX(0);
+}
+/* Variante ink (pour ghost → ink) */
+.btn-fill-ink::before {
+  background: var(--ink-raw);
+}
+
+/* Inputs éditoriaux — focus avec ligne cobalt animée */
+.input-editorial {
+  position: relative;
+  border: 0;
+  border-bottom: 1px solid var(--bone-raw);
+  background: transparent;
+  border-radius: 0;
+  padding: 12px 0;
+  font-size: 15px;
+  transition: border-color 280ms cubic-bezier(0.16, 1, 0.3, 1);
+  width: 100%;
+}
+.input-editorial:focus {
+  outline: none;
+  border-color: var(--cobalt);
+}
+.input-editorial-wrap {
+  position: relative;
+}
+.input-editorial-wrap::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 1px;
+  width: 100%;
+  background: var(--cobalt);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 380ms cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+.input-editorial-wrap:focus-within::after {
+  transform: scaleX(1);
+}
+
+/* Badge / tag hover (cobalt) — translation seule, pas d'ombre */
+.tag-hover {
+  transition: background 220ms ease, color 220ms ease,
+    transform 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.tag-hover:hover {
+  transform: translateY(-1px);
+}
+
+/* Marquee horizontal infini (bandes d'annonce, ticker, logos partenaires) */
+@keyframes cv-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.animate-marquee {
+  animation: cv-marquee 36s linear infinite;
+  will-change: transform;
+}
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* Page content enter — pour le contenu principal d'une page (à mettre sur
+   un wrapper INTERNE, JAMAIS sur <main>, même raison que ci-dessus). */
+@keyframes cv-pageContent {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.page-content-enter {
+  animation: cv-pageContent 720ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Stagger CSS-only via :nth-child — utile sans Reveal pour des listes courtes */
+.stagger-fade > * {
+  animation: cv-pageContent 720ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  opacity: 0;
+}
+.stagger-fade > :nth-child(1) { animation-delay: 0ms; }
+.stagger-fade > :nth-child(2) { animation-delay: 80ms; }
+.stagger-fade > :nth-child(3) { animation-delay: 160ms; }
+.stagger-fade > :nth-child(4) { animation-delay: 240ms; }
+.stagger-fade > :nth-child(5) { animation-delay: 320ms; }
+.stagger-fade > :nth-child(6) { animation-delay: 400ms; }
+.stagger-fade > :nth-child(7) { animation-delay: 480ms; }
+.stagger-fade > :nth-child(8) { animation-delay: 560ms; }
+.stagger-fade > :nth-child(9) { animation-delay: 640ms; }
+.stagger-fade > :nth-child(10) { animation-delay: 720ms; }
+
+/* Icon scale subtil au hover (parent .group) */
+.icon-scale {
+  transition: transform 280ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.group:hover .icon-scale,
+.group:focus-visible .icon-scale {
+  transform: scale(1.08);
+}
+
+/* Icon rotate — chevrons, flèches qui tournent (ex. accordions) */
+.icon-rotate-90 {
+  transition: transform 320ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.group[data-state="open"] .icon-rotate-90,
+.group[aria-expanded="true"] .icon-rotate-90 {
+  transform: rotate(90deg);
+}
+
+/* Image overlay cobalt (subtil) au hover du parent .group */
+.img-overlay-cobalt {
+  position: relative;
+}
+.img-overlay-cobalt::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    transparent 55%,
+    color-mix(in oklch, var(--cobalt) 35%, transparent) 100%
+  );
+  opacity: 0;
+  transition: opacity 480ms cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+  z-index: 1;
+}
+.group:hover .img-overlay-cobalt::after,
+.group:focus-visible .img-overlay-cobalt::after {
+  opacity: 1;
+}
+
+/* Float subtil — réservé à 1 ou 2 CTA très visibles MAX */
+@keyframes cv-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+.animate-float {
+  animation: cv-float 2800ms ease-in-out infinite;
+}
+
+/* Fade-up court (badges, étiquettes, micro-éléments) */
+@keyframes cv-fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-fade-up {
+  animation: cv-fadeUp 540ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Shimmer — passe lumineuse oblique sur un bouton important au hover.
+   Subtle, ~700ms, ne se répète pas. */
+@keyframes cv-shimmer {
+  0% {
+    transform: translateX(-120%) skewX(-15deg);
+  }
+  100% {
+    transform: translateX(220%) skewX(-15deg);
+  }
+}
+.btn-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+.btn-shimmer::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.18),
+    transparent
+  );
+  transform: translateX(-120%) skewX(-15deg);
+  pointer-events: none;
+}
+.btn-shimmer:hover::after,
+.btn-shimmer:focus-visible::after {
+  animation: cv-shimmer 720ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Filet qui s'étire (rules de section, dividers décoratifs) */
+.rule-grow {
+  position: relative;
+  height: 1px;
+  background: transparent;
+  overflow: hidden;
+}
+.rule-grow::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  background: var(--ink-raw);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 1100ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.rule-grow.is-visible::after {
+  transform: scaleX(1);
+}
+
+/* Borders cobalt qui apparaissent autour d'une card au hover */
+.card-cobalt-border {
+  position: relative;
+  isolation: isolate;
+}
+.card-cobalt-border::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--cobalt);
+  opacity: 0;
+  transition: opacity 320ms cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+  z-index: 1;
+}
+.card-cobalt-border:hover::before,
+.group:hover .card-cobalt-border::before,
+.group:focus-visible .card-cobalt-border::before {
+  opacity: 1;
+}
+
+/* Caret/dot qui pulse — pour les indicateurs "live" (état en ligne, etc) */
+@keyframes cv-pulseDot {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.5);
+    opacity: 0.3;
+  }
+}
+.animate-pulse-dot {
+  animation: cv-pulseDot 2000ms ease-in-out infinite;
+}
+
+/* Eyebrow scale-in — petit dash + texte qui apparaît */
+@keyframes cv-eyebrowIn {
+  from {
+    opacity: 0;
+    transform: translateX(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+.animate-eyebrow-in {
+  animation: cv-eyebrowIn 600ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Underline gradient (pour titres éditoriaux importants) — version + épaisse */
+.link-underline-thick {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  background-size: 0 2px;
+  transition: background-size 420ms cubic-bezier(0.16, 1, 0.3, 1);
+  padding-bottom: 3px;
+}
+.group:hover .link-underline-thick,
+.group:focus-visible .link-underline-thick {
+  background-size: 100% 2px;
+}
+
+/* Cobalt pen highlight (pour titres éditoriaux importants) — passage marqueur */
+.link-highlight-cobalt {
+  background-image: linear-gradient(
+    color-mix(in oklch, var(--cobalt) 18%, transparent),
+    color-mix(in oklch, var(--cobalt) 18%, transparent)
+  );
+  background-position: 0 88%;
+  background-repeat: no-repeat;
+  background-size: 0 36%;
+  transition: background-size 520ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.group:hover .link-highlight-cobalt,
+.group:focus-visible .link-highlight-cobalt {
+  background-size: 100% 36%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-pulse-heart,
+  .group-arrow,
+  .link-underline-anim,
+  .link-underline-thick,
+  .link-highlight-cobalt,
+  .nav-underline::after,
+  .group-zoom,
+  .btn-ink,
+  .btn-cobalt,
+  .btn-ghost,
+  .card-lift,
+  .btn-fill::before,
+  .btn-shimmer::after,
+  .icon-scale,
+  .icon-rotate-90,
+  .img-overlay-cobalt::after,
+  .tag-hover,
+  .input-editorial,
+  .input-editorial-wrap::after,
+  .card-cobalt-border::before,
+  .rule-grow::after,
+  .animate-marquee,
+  .animate-float,
+  .animate-pulse-dot,
+  .animate-fade-up,
+  .animate-eyebrow-in,
+  .page-content-enter,
+  .stagger-fade > * {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .view-swap {
+    animation: none;
+  }
+}
+
+/* Pages "app-mode" (catalogue carte) — header global only, no footer,
+   pas d'announcement bar (gagne 36px de hauteur utile). */
+body.is-app-mode > div > footer {
+  display: none;
+}
+body.is-app-mode > div {
+  min-height: 0 !important;
+}
+body.is-app-mode > div > main {
+  flex: 0 1 auto !important;
+}
+
+/* Cache uniquement la bande d'annonce (pour /biens grid : on garde
+   footer + scroll natif, on retire juste les 36px d'annonce qui prennent
+   de la place inutilement). */
+body.is-app-mode [data-announcement-bar],
+body.no-announcement [data-announcement-bar] {
+  display: none;
+}
+
+/* Catalogue biens — desktop, bloc full-viewport avec scroll interne seul. */
+@media (min-width: 1024px) {
+  html:has(.biens-page-wrapper) {
+    height: 100vh;
+    overflow: hidden;
+  }
+  body:has(.biens-page-wrapper) {
+    overflow: hidden;
+  }
+  .biens-page-wrapper {
+    height: calc(100vh - 72px);
+    overflow: hidden;
+  }
+  .biens-page-wrapper > .sticky {
+    position: static;
+    top: auto;
+  }
+}
+
+/* Scrollbar fine pour les zones scrollables internes */
+.scrollbar-editorial {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+.scrollbar-editorial::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+.scrollbar-editorial::-webkit-scrollbar-track {
+  background: transparent;
+}
+.scrollbar-editorial::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+.scrollbar-editorial::-webkit-scrollbar-thumb:hover {
+  background: var(--muted-foreground);
+  background-clip: padding-box;
+  border: 2px solid transparent;
+}
+.scrollbar-editorial::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* Scrollbar masquée — pour les rangées horizontales */
+.scrollbar-none {
+  scrollbar-width: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+
+/* Map markers — neutral */
+.map-pin {
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  width: fit-content;
+}
+.map-pin-label {
+  background: var(--foreground);
+  color: var(--background);
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  padding: 5px 12px;
+  border: 1px solid var(--foreground);
+  box-shadow: 0 2px 6px oklch(0 0 0 / 0.18);
+  line-height: 1;
+  position: relative;
+  letter-spacing: 0.01em;
+}
+.map-pin-label::after {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  width: 8px;
+  height: 8px;
+  background: var(--foreground);
+  border-right: 1px solid var(--foreground);
+  border-bottom: 1px solid var(--foreground);
+}
+.map-pin:hover .map-pin-label {
+  box-shadow: 0 3px 10px oklch(0 0 0 / 0.3);
+}
+.map-pin-card {
+  display: block;
+  color: inherit;
+  width: 240px;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.25s ease, opacity 0.2s ease, margin 0.25s ease;
+  margin-bottom: 0;
+  background: var(--background);
+  border: 1px solid var(--border);
+  box-shadow: 0 6px 24px oklch(0 0 0 / 0.14);
+}
+.map-pin-slider {
+  position: relative;
+  width: 100%;
+  height: 140px;
+  overflow: hidden;
+}
+.map-slide-track {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  transition: transform 300ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  will-change: transform;
+}
+.map-slide {
+  height: 100%;
+  flex-shrink: 0;
+  position: relative;
+}
+.map-slide img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  display: block;
+}
+.map-card-noimg {
+  width: 100%;
+  height: 140px;
+  background: var(--muted);
+}
+.map-slide-prev,
+.map-slide-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: oklch(0.98 0 0 / 0.9);
+  color: var(--foreground);
+  border: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 9999px;
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s, background 0.2s;
+  box-shadow: 0 1px 3px oklch(0 0 0 / 0.18);
+  z-index: 2;
+  padding: 0;
+}
+.map-slide-prev > *,
+.map-slide-next > * {
+  pointer-events: none;
+}
+.map-pin-slider:hover .map-slide-prev,
+.map-pin-slider:hover .map-slide-next {
+  opacity: 1;
+}
+@media (hover: none) {
+  .map-slide-prev,
+  .map-slide-next {
+    opacity: 1;
+  }
+}
+.map-slide-prev:hover,
+.map-slide-next:hover {
+  background: var(--background);
+}
+.map-slide-prev {
+  left: 6px;
+}
+.map-slide-next {
+  right: 6px;
+}
+.map-dots {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  overflow: hidden;
+  z-index: 2;
+}
+.map-dots-track {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: transform 300ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  will-change: transform;
+}
+.map-dot {
+  flex-shrink: 0;
+  width: 6px;
+  height: 6px;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.map-dot::before {
+  content: "";
+  position: absolute;
+  inset: -9px;
+}
+.map-dot-inner {
+  display: block;
+  width: 4px;
+  height: 4px;
+  border-radius: 9999px;
+  background: oklch(0.98 0 0 / 0.6);
+  transform: scale(0);
+  transition: transform 300ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    background-color 200ms, width 200ms, height 200ms;
+}
+.map-dot.is-visible .map-dot-inner {
+  transform: scale(1);
+}
+.map-dot.is-active .map-dot-inner {
+  width: 6px;
+  height: 6px;
+  background: var(--background);
+  box-shadow: 0 0 4px oklch(0 0 0 / 0.4);
+}
+.map-dot:hover .map-dot-inner {
+  background: oklch(0.98 0 0 / 0.85);
+}
+.map-pin-body {
+  display: flex;
+  flex-direction: column;
+  padding: 12px 14px 14px;
+  gap: 4px;
+  text-decoration: none;
+  color: inherit;
+}
+.map-pin-title {
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--foreground);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+.map-pin-price {
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--foreground);
+  line-height: 1.2;
+}
+.map-pin-details {
+  font-size: 11px;
+  color: var(--muted-foreground);
+  white-space: nowrap;
+  line-height: 1.3;
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+}
+.map-pin.is-expanded {
+  z-index: 100 !important;
+}
+.map-pin.is-expanded .map-pin-label {
+  background: var(--primary);
+  border-color: var(--primary);
+}
+.map-pin.is-expanded .map-pin-label::after {
+  background: var(--primary);
+  border-right-color: var(--primary);
+  border-bottom-color: var(--primary);
+}
+.map-pin.is-expanded .map-pin-card {
+  max-height: 300px;
+  opacity: 1;
+  margin-bottom: 10px;
+}
+.map-property-marker {
+  background: var(--foreground);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  box-shadow: 0 3px 10px oklch(0 0 0 / 0.28);
+  cursor: pointer;
+  position: relative;
+  color: var(--background);
+  white-space: nowrap;
+  transition: padding 0.15s ease;
+}
+.map-property-marker::after {
+  content: "";
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  width: 10px;
+  height: 10px;
+  background: var(--foreground);
+}
+.map-property-marker .map-property-icon {
+  display: flex;
+}
+.map-property-marker .map-property-label {
+  max-width: 0;
+  overflow: hidden;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  transition: max-width 0.2s ease, margin 0.2s ease;
+  margin-left: 0;
+}
+.map-property-marker.is-expanded {
+  padding: 6px 12px 6px 8px;
+}
+.map-property-marker.is-expanded .map-property-label {
+  max-width: 300px;
+  margin-left: 6px;
+}
+.map-dest-marker {
+  background: var(--primary);
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px color-mix(in oklch, var(--primary) 45%, transparent);
+  border: 2px solid var(--background);
+  cursor: pointer;
+}
+
+/* Contrôles de zoom MapLibre */
+.maplibregl-ctrl-top-right,
+.maplibregl-ctrl-top-left,
+.maplibregl-ctrl-bottom-right,
+.maplibregl-ctrl-bottom-left {
+  margin: 12px;
+}
+.maplibregl-ctrl-group {
+  background: var(--background) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 0 !important;
+  box-shadow: 0 1px 3px color-mix(in oklch, var(--foreground) 8%, transparent) !important;
+  overflow: hidden;
+}
+.maplibregl-ctrl-group > button {
+  width: 36px !important;
+  height: 36px !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  transition: background-color 160ms ease;
+  position: relative;
+}
+.maplibregl-ctrl-group > button + button {
+  border-top: 1px solid var(--border) !important;
+}
+.maplibregl-ctrl-group > button:hover {
+  background: var(--muted) !important;
+}
+.maplibregl-ctrl-group > button:focus-visible {
+  outline: 2px solid var(--foreground);
+  outline-offset: -2px;
+}
+.maplibregl-ctrl-group > button.maplibregl-ctrl-zoom-in .maplibregl-ctrl-icon,
+.maplibregl-ctrl-group > button.maplibregl-ctrl-zoom-out .maplibregl-ctrl-icon {
+  background-image: none !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.maplibregl-ctrl-group > button.maplibregl-ctrl-zoom-in .maplibregl-ctrl-icon::after,
+.maplibregl-ctrl-group > button.maplibregl-ctrl-zoom-out .maplibregl-ctrl-icon::after {
+  content: "";
+  position: absolute;
+  background: var(--foreground);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 12px;
+  height: 1px;
+}
+.maplibregl-ctrl-group > button.maplibregl-ctrl-zoom-in .maplibregl-ctrl-icon::before {
+  content: "";
+  position: absolute;
+  background: var(--foreground);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 1px;
+  height: 12px;
+}
